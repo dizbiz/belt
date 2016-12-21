@@ -1,0 +1,12 @@
+<h1>Editing <%= @group.name %></h1>
+
+<form action="/groups/<%= @group.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <label for="Name">Name:</label>
+  <input type="text" name="group[name]" id="Name" value="<%= @group.name %>">
+  <label for="Date">Date:</label>
+  <input type="text" name="group[description]" id="description" value="<%= @group.description %>">
+  <input type="submit" value="Update Group">
+</form>
+<a href="/groups/">Back</a>

@@ -1,0 +1,28 @@
+<a style="float:right" href="/groups/">Dashboard</a>
+<a style="float:right" href="/sessions/<%= session[:user_id] %>" data-method="delete">Logout</a>
+
+<h1>Showing <%= @group.name %></h1>
+<p>Host: <%= @group.description %></p>
+<p>Host: <%= @group.host.first_name %></p>
+<% @group.group_rosters.each do |group| %>
+	<p>Members: <%= group.user.first_name %>,</p>
+<% end %>
+
+
+<table class="table">
+ 		<tr>
+ 			<th>Action</th>
+ 		</tr>
+ 		<tr>
+ 			<% @groups.each do |group| %>
+			<td>
+ 				<% if group.users.include?(@user) %>
+ 				<a href="/groups/<%=group.id%>" data-method="delete">Leave Group</a>
+ 				<% end %>
+ 			</td>		
+ 			<% end %>
+ 		</tr>
+ 	</table>
+
+
+

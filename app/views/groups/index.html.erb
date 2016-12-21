@@ -1,0 +1,55 @@
+<div class="row">
+	<h3> Welcome <%= current_user.first_name %></h3>
+	<a style="float:right" href="/sessions/<%= session[:user_id] %>" data-method="delete">Logout</a>
+</div>
+<div class="row">
+ <h2>Here are the organizations you may join</h2>
+ 	<table class="table">
+ 		<tr>	
+ 			<th>Name</th>
+ 			<th>Description</th>
+ 			<th>Members</th>
+ 			<th>Host</th>
+ 			<th>Action</th>
+ 		</tr>
+ 		<% @group.each do |group| %>
+ 			<tr>
+ 				<td><a href="/groups/<%=group.id%>"><%= group.name %></a></td>	
+ 				<td><%= group.description %></td>
+ 				<td><%= group.group_rosters.count%></td>
+ 				<td><%= group.host.first_name %></td>
+ 				<td>
+ 					<% if group.users.include?(current_user) %>
+ 						<span>Joining</span>
+ 						<a href="/group_rosters/<%= group.id %>" data-method="delete">Cancel</a>
+ 						<% elsif group.host == current_user %>
+ 							<a href="/groups/<%= group.id %>/edit">Edit</a>&nbsp; |&nbsp;
+ 							<a href="/groups/<%=group.id%>" data-method="delete">Delete</a>
+ 						<% else %>
+ 							<a href="/group_rosters/<%=group.id%>" data-method="post">Join</a>
+ 					<% end %>	
+ 				</td>
+ 			</tr>
+ 		<% end %>	
+ 	</table>
+	
+</div>
+</div>
+
+<div class="row">
+	<h3>Create a new organization:</h3>
+	<form action="/groups" method="post">
+		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+		<div>
+			<label>Org Name:</label>
+			<input type="text" name="group[name]">
+		</div>
+		<div>
+			<label>Description:</label>
+			<input type="text" name="group[description]">
+		</div>
+		<div>
+			<input type="submit" name="Create">
+		</div> 		 		 
+	</form>
+</div>
